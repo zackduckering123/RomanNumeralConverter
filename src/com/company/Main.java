@@ -9,8 +9,14 @@ public class Main {
 
     public static void main(String[] args) {
         AddToUserS();
-        AddToUserI();
-        System.out.println("Your numeral converted into a number is " + MakeNum());
+
+        boolean valid = AddToUserI();
+        if (valid) {
+            System.out.println("Your numeral converted into a number is " + MakeNum());
+        } else {
+            System.out.println("This is not a roman numeral");
+        }
+
     }
 
     public static void AddToUserS() {
@@ -18,13 +24,14 @@ public class Main {
         System.out.println("Please enter your number in roman numerals up to M");
         UserNumeral = input.nextLine();
 
-            for (int i = 0; i < UserNumeral.length(); i++) {
-                UserSArray = UserNumeral.split("");
-            }
+        for (int i = 0; i < UserNumeral.length(); i++) {
+            UserSArray = UserNumeral.split("");
+        }
     }
 
-    public static void AddToUserI() {
 
+    public static boolean AddToUserI() {
+        boolean valid = true;
         for (int i = 0; i < UserNumeral.length(); i++) {
             if (UserSArray[i].equalsIgnoreCase("i")) {
                 UserIArray[i] = 1;
@@ -40,22 +47,27 @@ public class Main {
                 UserIArray[i] = 500;
             } else if (UserSArray[i].equalsIgnoreCase("m")) {
                 UserIArray[i] = 1000;
-            } else System.out.println("All of these letters are not roman numerals");
+            } else {
+                valid = false;
+            }
         }
+        return valid;
     }
 
-    public static int MakeNum(){
+    public static int MakeNum() {
+
         int Num = 0;
         UserIArray[UserNumeral.length()] = 0;
         for (int i = 0; i < UserNumeral.length(); i++) {
-            if (UserIArray[i] < UserIArray[i + 1] ){
+            if (UserIArray[i] < UserIArray[i + 1]) {
                 int temp = UserIArray[i + 1] - UserIArray[i];
                 Num = Num + temp;
                 i = i + 1;
-            }else {
+            } else {
                 Num = Num + UserIArray[i];
             }
         }
         return Num;
     }
 }
+
